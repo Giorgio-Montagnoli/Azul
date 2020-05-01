@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Azul";
+}
+
+<br />
+<div class="alert alert-info" role="alert">
+    <div class="row">
+        <div class="col-md-6">
+            GameID: <span id="gameIdTxt" style="font-weight:bold"></span>
+        </div>
+        <div class="col-md-6">
+            <input id="leaveRoom" type="button" class="btn btn-danger pull-right" value="Leave Room" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            Player: <span id="gameNameTxt" style="font-weight:bold"></span>
+        </div>
+    </div>
+</div>
+
+<div class="row form-group" id="waitingRoom">
+    <div class="col-md-12">
+        <input id="start" type="button" class="btn btn-success" value="Start Game" />
+    </div>
+</div>
+
+<div id="showPlayArea">
+    @Html.Partial("_gameChatAndGame", "Game")
+    @*<div id="gameControls" style="display: none;">
+        @Html.Partial("_gameControls", "Game")
+    </div>*@
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function updateScrollDivLog() {
+            var element = document.getElementById("divLog");
+            element.scrollTop = element.scrollHeight;
+        }
+
+        function disableActions(){
+            $(".gameControls").prop('disabled', 'disabled');
+        }
+
+        function callGameRefresh()
+        {
+            $.ajax({
+                method: "get",
+                url: "/Game",
+            }).done(function (result) {
+                $("#gameCont").html(result);
+            });
+        }
+
+        $(function () {
+            // Declare a proxy to reference the hub.
+            var chat = $.connection.chatHub;
+
+            var gameId = $.cookie('gameId');
+            var gameName = $.cookie('gameName');
+
+            $("#gameIdTxt").html(gameId);
+            $("#gameNameTxt").html(gameName);
+
+            // Dati di connessione
+            chat.state.gameId = gameId;
+            chat.state.name = gameName;
+
+            // Funzioni di ritorno
+            chat.client.showMessage = function (data) {
+                $("#divLog").append("<div>" + data + "<div/>");
+                //updateScrollDivLog();
+            };
+
+            chat.client.gameStarted = function (gameId) {
+                $('#waitingRoom').remove();
+                //$("#gameControls").show();
+                callGameRefresh();
+            };
+
+            //chat.client.refreshDrawnCards = function () {
+            //    $(".gameControls").prop('disabled', false);
+            //}
+
+            //chat.client.refreshGameForAll = function () {
+            //    callGameRefresh();
+            //}
+
+            // Avvio connessione.
+            $.connection.hub.start().done(function () {
+                chat.server.join(chat.state.gameId);
+                chat.server.hasJoined();
+
+                $('#start').click(function () {
+                    chat.server.startGame();
+
+                    // Chiamata AJAX a metodo per rimuovere da file il gioco
+                    $.get('/Game/GameStarted?gameId=' + chat.state.gameId);
+                });
+            });
+
+            $(document).on("click", '.selectable', function (event) {
+                $(".selectable").removeClass('selectedItems');
+
+                var colorSelected = $(this).data('color');
+
+                var parent = $(this).parent();
+                parent.children("." + colorSelected).addClass('selectedItems');
+            });
+
+            callGameRefresh();
+        });
+    </script>
+}

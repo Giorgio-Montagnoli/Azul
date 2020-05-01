@@ -1,0 +1,30 @@
+﻿@model Azul.Models.ViewModel.GameVM
+
+@{
+    var currentPlayer = Model.Players.First(s => s.Name.Equals(Request.Cookies.Get(Azul.Helpers.Utility.COOKIE_GAME_NAME).Value));
+}
+
+<div class="row form-group">
+    <div class="col-xs-12 col-md-12">
+        <a href="#" id="confirmSelect" class="btn btn-info gameControls pull-right">Done</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">Game</div>
+            <div class="panel-body">
+                @Html.Partial("_gameFactories", Model)
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading">Player Board</div>
+    <div class="panel-body">
+        @Html.Partial("_playerBoard", currentPlayer)
+    </div>
+</div>
+
+

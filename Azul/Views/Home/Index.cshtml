@@ -1,0 +1,54 @@
+﻿@model List<Azul.Models.ViewModel.GameListVM>
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<div class="tab-content form-group">
+    <a class="btn btn-info" href="@Url.Action("StartANewGame", "Game")">Create new Game</a>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">Available Games</div>
+            <div class="panel-body">
+                <div class="form-group" style="overflow-y:scroll;height:540px">
+                    <table class="table table-responsive">
+                        <tr>
+                            <th>Game Id</th>
+                            <th>Players</th>
+                            <th>Options</th>
+                        </tr>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Players.Aggregate((c, n) => c + ", " + n)</td>
+                                    <td><a class="btn btn-info" href="@Url.Action("Join", "Game", new { gameId = item.Id })">Join</a></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3"><i>No game created ...</i></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 5000);
+    </script>
+}

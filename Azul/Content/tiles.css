@@ -1,0 +1,7 @@
+﻿.tilesIcon {
+    width:20%;
+}
+
+.selectedItems {
+    border: 5px solid yellow;
+}

@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "StartANewGame";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="alert alert-info" role="alert">
+        @Html.Label("name", "Nome")
+        @Html.TextBox("name")
+    </div>
+
+    <button class="btn btn-success" type="submit">Create</button>
+}
+

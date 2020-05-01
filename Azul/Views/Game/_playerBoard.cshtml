@@ -1,0 +1,38 @@
+﻿@model Azul.Models.Player
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.Partial("_playerInsertingRow", Model.FirstRow)
+        @Html.Partial("_playerInsertingRow", Model.SecondRow)
+        @Html.Partial("_playerInsertingRow", Model.ThirdRow)
+        @Html.Partial("_playerInsertingRow", Model.FourthRow)
+        @Html.Partial("_playerInsertingRow", Model.FifthRow)
+    </div>
+    <div class="col-md-6">
+        @for (int x = 0; x < Model.Board.GetLength(0); x++)
+        {
+            <div class="row">
+                @for (int y = 0; y < Model.Board.GetLength(1); y++)
+                {
+                    <div class="col-md-1">
+                        @{var item = Model.Board[x, y];}
+                        @if (item != null && !string.IsNullOrWhiteSpace(item.ImgUrl))
+                        {
+                            <img src="@item.ImgUrl" width="31" />
+                        }
+                        else
+                        {
+                            <div style="width:31px;height:31px; border:1px solid black"></div>
+                        }
+                    </div>
+                 }
+            </div>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2>Current Victory Points: @Model.VictoryPoints</h2>
+    </div>
+</div>
+

@@ -1,0 +1,19 @@
+﻿@model string
+
+@{
+    ViewBag.Title = "Unisciti ad una partita";
+}
+
+<br />
+@using (Html.BeginForm())
+{
+    <div class="alert alert-info" role="alert">
+        @Html.Label("name", "Nome")
+        @Html.TextBox("name")
+
+        @Html.Label("gameId", "Game Id")
+        @Html.TextBox("gameId", Model)
+    </div>
+
+    <button class="btn btn-success" type="submit">Join a Specific Game</button>
+}
