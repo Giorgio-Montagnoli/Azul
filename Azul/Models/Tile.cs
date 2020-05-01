@@ -1,14 +1,11 @@
 ﻿using Azul.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Azul.Models
 {
     public class Tile
     {
-        public string Color {
+        public string Color
+        {
             get
             {
                 switch (Type)
@@ -30,9 +27,13 @@ namespace Azul.Models
                 }
             }
         }
+
         public TileType Type { get; set; }
-        public string ImgUrl {
-            get {
+
+        public string ImgUrl
+        {
+            get
+            {
                 switch (Type)
                 {
                     case TileType.Black:

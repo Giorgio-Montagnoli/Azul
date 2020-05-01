@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Azul.Models
+﻿namespace Azul.Models
 {
     public class Player
     {
@@ -27,11 +22,11 @@ namespace Azul.Models
 
             FirstRow = new Tile[1];
             SecondRow = new Tile[2];
-            ThirdRow  = new Tile[3];
+            ThirdRow = new Tile[3];
             FourthRow = new Tile[4];
             FifthRow = new Tile[5];
 
-            Board = new Tile[5,5];
+            Board = new Tile[5, 5];
 
             FloorRow = new Tile[7];
         }
