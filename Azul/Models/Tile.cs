@@ -4,6 +4,15 @@ namespace Azul.Models
 {
     public class Tile
     {
+        internal TileType _type;
+        public TileType Type
+        {
+            get
+            {
+                return _type;
+            }
+        }
+
         public string Color
         {
             get
@@ -27,9 +36,6 @@ namespace Azul.Models
                 }
             }
         }
-
-        public TileType Type { get; set; }
-
         public string ImgUrl
         {
             get
@@ -52,6 +58,11 @@ namespace Azul.Models
                         return string.Empty;
                 }
             }
+        }
+
+        public Tile(TileType type)
+        {
+            _type = type;
         }
     }
 }

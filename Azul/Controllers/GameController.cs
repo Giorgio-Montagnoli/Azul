@@ -1,4 +1,6 @@
-﻿using Azul.Models.ViewModel;
+﻿using Azul.Helpers;
+using Azul.Models;
+using Azul.Models.ViewModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,8 +9,6 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Web;
 using System.Web.Mvc;
-using Azul.Helpers;
-using Azul.Models;
 
 namespace Azul.Controllers
 {
@@ -70,8 +70,16 @@ namespace Azul.Controllers
         {
             var gameVM = MemoryCache.Default[gameId] as GameVM;
 
+            var gamesListVM = GetAvailableGames();
+
+            var gameListVM = gamesListVM.FirstOrDefault(q => q.Id.Equals(gameId));
+
             if (gameVM == null)
             {
+                gamesListVM.Remove(gameListVM);
+
+                SaveAvailableGames(gamesListVM);
+
                 return RedirectToAction("GameNotFound");
             }
             else if (gameVM.Started.HasValue)
@@ -83,9 +91,6 @@ namespace Azul.Controllers
                 return RedirectToAction("UsernameAlreadyUsed");
             }
 
-            var gamesListVM = GetAvailableGames();
-
-            var gameListVM = gamesListVM.FirstOrDefault(q => q.Id.Equals(gameId));
             gameListVM.Players.Add(name);
 
             SaveAvailableGames(gamesListVM);

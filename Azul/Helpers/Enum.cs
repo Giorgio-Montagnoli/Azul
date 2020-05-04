@@ -2,12 +2,11 @@
 {
     public enum TileType
     {
-        None = 0,
-        Player1 = 1,
-        Red = 2,
-        Black = 3,
-        Blue = 4,
-        Ice = 5,
-        Yellow = 6,
+        Blue,
+        Yellow,
+        Red,
+        Black,
+        Ice,
+        Player1
     }
 }

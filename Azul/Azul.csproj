@@ -175,8 +175,10 @@
     </Compile>
     <Compile Include="Helpers\Enum.cs" />
     <Compile Include="Helpers\Utility.cs" />
-    <Compile Include="Models\Factory.cs" />
+    <Compile Include="Models\Expositor.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\WallTile.cs" />
+    <Compile Include="Models\RowToInsert.cs" />
     <Compile Include="Models\Tile.cs" />
     <Compile Include="Models\ViewModel\GameListVM.cs" />
     <Compile Include="Models\ViewModel\GameVM.cs" />
