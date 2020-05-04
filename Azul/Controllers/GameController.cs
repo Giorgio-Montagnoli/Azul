@@ -86,12 +86,21 @@ namespace Azul.Controllers
             {
                 return RedirectToAction("GameStarted");
             }
+            else if (gameVM.Players.Count > 3)
+            {
+                return RedirectToAction("GameFull");
+            }
             else if (gameVM.Players.Any(q => q.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)))
             {
                 return RedirectToAction("UsernameAlreadyUsed");
             }
 
             gameListVM.Players.Add(name);
+
+            if (gameVM.Players.Count.Equals(4))
+            {
+                gamesListVM.Remove(gameListVM);
+            }
 
             SaveAvailableGames(gamesListVM);
 
