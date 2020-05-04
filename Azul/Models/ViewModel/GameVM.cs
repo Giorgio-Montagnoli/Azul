@@ -1,4 +1,5 @@
 ﻿using Azul.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace Azul.Models.ViewModel
         public DateTime? Started { get; set; }
         public DateTime? Ended { get; set; }
 
+        [JsonIgnore]
         public bool FirstTakeFromCenterTable
         {
             get
@@ -51,6 +53,7 @@ namespace Azul.Models.ViewModel
                 var firstPlayer = Players.OrderBy(q => Guid.NewGuid()).First();
 
                 firstPlayer.IsFirstPlayer = true;
+                firstPlayer.IsMyTurn = true;
 
                 var tiles = new List<TileType>
                 {
@@ -81,13 +84,6 @@ namespace Azul.Models.ViewModel
             return false;
         }
 
-        public void YouCanPlay(string playerName)
-        {
-            var player = Players.FirstOrDefault(p => p.Name.Equals(playerName, StringComparison.InvariantCultureIgnoreCase));
-
-            player.IsMyTurn = true;
-        }
-
         public void TakeFromExpositor(string playerName, int expositorNumber, int rowNumber, TileType typeSelected)
         {
             var player = Players.FirstOrDefault(p => p.Name.Equals(playerName, StringComparison.InvariantCultureIgnoreCase));
@@ -99,6 +95,8 @@ namespace Azul.Models.ViewModel
                 player.AddTilesToRow(rowNumber, typeSelected, expositor.SelectedByPlayer(typeSelected), false);
 
                 CenterTable.AddRange(expositor.ToCenterPlate(typeSelected));
+
+                TurnDone(player);
             }
         }
 
@@ -116,54 +114,19 @@ namespace Azul.Models.ViewModel
                 }
 
                 CenterTable.RemoveAll(t => t.Type.Equals(TileType.Player1));
-            }
-        }
 
-        public void TurnDone(string playerName)
-        {
-            // Se ci sono ancora espositori con tile o tile a centro tavola
-            if (Expositors.Any(e => e.Tiles.Any()) || CenterTable.Any())
-            {
-                var player = Players.FirstOrDefault(p => p.Name.Equals(playerName, StringComparison.InvariantCultureIgnoreCase));
-
-                var nextPlayer = Players.Skip(Players.IndexOf(player) + 1).FirstOrDefault();
-
-                if (nextPlayer == null)
-                {
-                    nextPlayer = Players.FirstOrDefault();
-                }
-
-                // Next Player
-                YouCanPlay(nextPlayer.Name);
-            }
-            // Se non ci sono più tile da prendere...
-            else
-            {
-                // Tutti i giocatori fanno lo score di fine round
-                Players.ForEach(p => p.UpdateBoard());
-
-                // Se almeno un giocatore ha completato una riga
-                if (Players.Any(p => p.HasCompletedARow()))
-                {
-                    // Punti di fine partita
-                    Players.ForEach(p => p.EndGameVictoryPoints());
-
-                    Ended = DateTime.Now;
-                }
-                // Se si può ancora giocare...
-                else
-                {
-                    var firstPlayer = Players.First(p => p.IsFirstPlayer);
-
-                    SetupTable(firstPlayer.Name);
-
-                    RoundNo++;
-                }
+                TurnDone(player);
             }
         }
 
         void SetupTable(string playerName)
         {
+            // Mescolo le tile perché sono state passate al gioco lato client e devono essere nuovamente randomizzate
+            for (var k = 0; k < 3; k++)
+            {
+                TilesBag = TilesBag.OrderBy(q => Guid.NewGuid()).ToList();
+            }
+
             // Creo gli espositori
             Expositors = new List<Expositor>();
 
@@ -202,9 +165,49 @@ namespace Azul.Models.ViewModel
                         .SkipWhile(q => !q.IsFirstPlayer)
                         .Union(Players.TakeWhile(q => !q.IsFirstPlayer))
                         .ToList();
+        }
 
-            // Avviso il giocatore che è il suo turno
-            YouCanPlay(playerName);
+        void TurnDone(Player player)
+        {
+            // Se ci sono ancora espositori con tile o tile a centro tavola
+            if (Expositors.Any(e => e.Tiles.Any()) || CenterTable.Any())
+            {
+                var nextPlayer = Players.Skip(Players.IndexOf(player) + 1).FirstOrDefault();
+
+                if (nextPlayer == null)
+                {
+                    nextPlayer = Players.FirstOrDefault();
+                }
+
+                // Next Player
+                nextPlayer.IsMyTurn = true;
+            }
+            // Se non ci sono più tile da prendere...
+            else
+            {
+                // Tutti i giocatori fanno lo score di fine round
+                Players.ForEach(p => p.UpdateBoard());
+
+                // Se almeno un giocatore ha completato una riga
+                if (Players.Any(p => p.HasCompletedARow()))
+                {
+                    // Punti di fine partita
+                    Players.ForEach(p => p.EndGameVictoryPoints());
+
+                    Ended = DateTime.Now;
+                }
+                // Se si può ancora giocare...
+                else
+                {
+                    var firstPlayer = Players.First(p => p.IsFirstPlayer);
+
+                    firstPlayer.IsMyTurn = true;
+
+                    SetupTable(firstPlayer.Name);
+
+                    RoundNo++;
+                }
+            }
         }
     }
 }

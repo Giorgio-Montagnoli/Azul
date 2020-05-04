@@ -86,9 +86,19 @@ namespace Azul.Models
                     returnedTiles.AddRange(row.Empty());
 
                     // Conto i punti per la tessera
-                    VictoryPoints++;
-
                     // Aggiungo le tessere adicenti orizzontalmente e verticalmente
+                    var colPosition = Wall.ElementAt(row.Position).IndexOf(tileOnBoard);
+
+                    var points = NumAdjacent(Wall.ElementAt(row.Position), colPosition);
+
+                    points += NumAdjacent(Wall.SelectMany(q => q.Select((r, col) => new { r, col }).Where(r => r.col.Equals(colPosition))).Select(q => q.r).ToList(), row.Position);
+
+                    if (points.Equals(0))
+                    {
+                        points = 1;
+                    }
+
+                    VictoryPoints += points;
                 }
             }
 
@@ -135,6 +145,42 @@ namespace Azul.Models
         public bool HasCompletedARow()
         {
             return Wall.Any(row => row.All(tile => tile.Placed));
+        }
+
+        int NumAdjacent(List<WallTile> list, int startPosition)
+        {
+            var count = 0;
+
+            for (var i = startPosition - 1; i > -1; i--)
+            {
+                if (list.ElementAt(i).Placed)
+                {
+                    count++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (var i = startPosition + 1; i < list.Count; i++)
+            {
+                if (list.ElementAt(i).Placed)
+                {
+                    count++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (count > 0)
+            {
+                count++;
+            }
+
+            return count;
         }
     }
 }
