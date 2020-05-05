@@ -4,15 +4,6 @@ namespace Azul.Models
 {
     public class WallTile : Tile
     {
-        internal TileType _typeAllowed;
-        public TileType TypeAllowed
-        {
-            get
-            {
-                return _typeAllowed;
-            }
-        }
-
         private bool _placed;
         public bool Placed
         {
@@ -22,10 +13,7 @@ namespace Azul.Models
             }
         }
 
-        public WallTile(TileType typeAllowed) : base(typeAllowed)
-        {
-            _typeAllowed = typeAllowed;
-        }
+        public WallTile(TileType type) : base(type) { }
 
         public void HasBeenPlaced()
         {

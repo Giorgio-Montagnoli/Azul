@@ -77,7 +77,7 @@ namespace Azul.Models
                 if (row.CanBeInserted)
                 {
                     // Trovo la riga/colonna corrispondente nella board
-                    var tileOnBoard = Wall.ElementAt(row.Position).FirstOrDefault(q => q.TypeAllowed.Equals(row.TypeInUse.Value));
+                    var tileOnBoard = Wall.ElementAt(row.Position).FirstOrDefault(q => q.Type.Equals(row.TypeInUse.Value));
 
                     // Metto la tessera nella board
                     tileOnBoard.HasBeenPlaced();
@@ -139,7 +139,7 @@ namespace Azul.Models
             VictoryPoints += 7 * Wall.SelectMany(row => row.Select((r, col) => new { r.Placed, col }).Where(r => r.Placed)).GroupBy(r => r.col).Count(g => g.Count().Equals(5));
 
             // 10 Punti per ogni colore di cui sono state posizionate tutte e 5 le Piastrelle nella Parete.
-            VictoryPoints += 10 * Wall.SelectMany(row => row.Where(r => r.Placed).Select(r => r.TypeAllowed)).GroupBy(r => r).Count(g => g.Count().Equals(5));
+            VictoryPoints += 10 * Wall.SelectMany(row => row.Where(r => r.Placed).Select(r => r.Type)).GroupBy(r => r).Count(g => g.Count().Equals(5));
         }
 
         public bool HasCompletedARow()
