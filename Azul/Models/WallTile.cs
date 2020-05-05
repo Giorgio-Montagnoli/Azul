@@ -2,7 +2,7 @@
 
 namespace Azul.Models
 {
-    public class WallTile
+    public class WallTile : Tile
     {
         internal TileType _typeAllowed;
         public TileType TypeAllowed
@@ -22,7 +22,7 @@ namespace Azul.Models
             }
         }
 
-        public WallTile(TileType typeAllowed)
+        public WallTile(TileType typeAllowed) : base(typeAllowed)
         {
             _typeAllowed = typeAllowed;
         }
