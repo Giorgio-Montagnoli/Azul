@@ -2,34 +2,34 @@
 
 <div class="row form-group">
     @{
-        var firstHalf = (int)Math.Ceiling((double)Model.Factories.Count / 2);
-
-        foreach (var factory in Model.Factories.Take(firstHalf))
+        var firstHalf = (int)Math.Ceiling((double)Model.Expositors.Count / 2);
+    }
+        @foreach (var factory in Model.Expositors.Take(firstHalf))
         {
             <div class="col-md-3 text-center">
                 @foreach (var tile in factory.Tiles)
                 {
-                    <img src="@tile.ImgUrl" class="selectable form-group @tile.Color" data-color="@tile.Color" style="cursor:pointer" width="31" />
+                    <img src="@tile.ImgUrl" class="selectable form-group @tile.Type" data-exposnumber="@factory.Number" data-color="@tile.Type" style="cursor:pointer" width="31" />
                 }
             </div>
         }
-    }
+    
 </div>
 <div class="row form-group">
-    @foreach (var item in Model.CenterTable)
-    {
-        <div class="col-md-12 text-center">
-              <img src="@item.ImgUrl" class="selectable form-group @item.Color" data-color="@item.Color" style="cursor:pointer" width="31" />
-        </div>
-    }
+    <div class="col-md-12 text-center">
+        @foreach (var item in Model.CenterTable)
+        {
+            <img src="@item.ImgUrl" class="selectable form-group @item.Type" data-exposnumber="-1" data-color="@item.Type" style="cursor:pointer" width="31" />
+        }
+    </div>
 </div>
 <div class="row form-group">
-    @foreach (var factory in Model.Factories.Skip(firstHalf))
+    @foreach (var factory in Model.Expositors.Skip(firstHalf))
     {
         <div class="col-md-3 text-center">
                 @foreach (var tile in factory.Tiles)
                 {
-                    <img src="@tile.ImgUrl" class="selectable form-group @tile.Color" data-color="@tile.Color" style="cursor:pointer" width="31" />
+                    <img src="@tile.ImgUrl" class="selectable form-group @tile.Type" data-exposnumber="@factory.Number" data-color="@tile.Type" style="cursor:pointer" width="31" />
                 }
         </div>
     }

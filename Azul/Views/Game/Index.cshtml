@@ -57,7 +57,7 @@
 
         $(function () {
             // Declare a proxy to reference the hub.
-            var chat = $.connection.chatHub;
+            var chat = $.connection.gameHub;
 
             var gameId = $.cookie('gameId');
             var gameName = $.cookie('gameName');
@@ -72,7 +72,7 @@
             // Funzioni di ritorno
             chat.client.showMessage = function (data) {
                 $("#divLog").append("<div>" + data + "<div/>");
-                //updateScrollDivLog();
+                updateScrollDivLog();
             };
 
             chat.client.gameStarted = function (gameId) {
@@ -85,9 +85,9 @@
             //    $(".gameControls").prop('disabled', false);
             //}
 
-            //chat.client.refreshGameForAll = function () {
-            //    callGameRefresh();
-            //}
+            chat.client.refreshGameForAll = function () {
+                callGameRefresh();
+            }
 
             // Avvio connessione.
             $.connection.hub.start().done(function () {
@@ -100,6 +100,22 @@
                     // Chiamata AJAX a metodo per rimuovere da file il gioco
                     $.get('/Game/GameStarted?gameId=' + chat.state.gameId);
                 });
+
+                $(document).on("click", '.rowSelect', function (event) {
+                    var rowSelected = $(this).data('rowselected');
+                    var rowInfo = rowSelected.split("-");
+                    var exposNumber = $('.selectedItems').first().data('exposnumber');
+                    var color = $('.selectedItems').first().data('color');
+
+                    $(".selectable").removeClass('selectedItems');
+
+                    if (exposNumber == -1) {
+                        chat.server.takeFromCenterTable(gameId, rowInfo[1], color);
+                    }
+                    else {
+                        chat.server.takeFromExpositor(gameId, exposNumber, rowInfo[1], color);
+                    }
+                });
             });
 
             $(document).on("click", '.selectable', function (event) {
@@ -111,7 +127,7 @@
                 parent.children("." + colorSelected).addClass('selectedItems');
             });
 
-            callGameRefresh();
+            //callGameRefresh();
         });
     </script>
 }

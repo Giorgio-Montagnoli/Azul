@@ -20,15 +20,15 @@ namespace Azul.Models
                 switch (Type)
                 {
                     case TileType.Black:
-                        return "black";
+                        return "Black";
                     case TileType.Blue:
-                        return "blue";
+                        return "Blue";
                     case TileType.Ice:
-                        return "ice";
+                        return "Ice";
                     case TileType.Red:
-                        return "red";
+                        return "Red";
                     case TileType.Yellow:
-                        return "yellow";
+                        return "Yellow";
                     case TileType.Player1:
                         return "Player1";
                     default:
@@ -43,17 +43,17 @@ namespace Azul.Models
                 switch (Type)
                 {
                     case TileType.Black:
-                        return "/Content/images/black.png";
+                        return "/Content/images/Black.png";
                     case TileType.Blue:
-                        return "/Content/images/blue.png";
+                        return "/Content/images/Blue.png";
                     case TileType.Ice:
-                        return "/Content/images/ice.png";
+                        return "/Content/images/Ice.png";
                     case TileType.Red:
-                        return "/Content/images/red.png";
+                        return "/Content/images/Red.png";
                     case TileType.Yellow:
-                        return "/Content/images/yellow.png";
+                        return "/Content/images/Yellow.png";
                     case TileType.Player1:
-                        return "/Content/images/player1.png";
+                        return "/Content/images/Player1.png";
                     default:
                         return string.Empty;
                 }

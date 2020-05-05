@@ -4,11 +4,11 @@
     var currentPlayer = Model.Players.First(s => s.Name.Equals(Request.Cookies.Get(Azul.Helpers.Utility.COOKIE_GAME_NAME).Value));
 }
 
-<div class="row form-group">
+@*<div class="row form-group">
     <div class="col-xs-12 col-md-12">
-        <a href="#" id="confirmSelect" class="btn btn-info gameControls pull-right">Done</a>
+        <a href="#" id="confirmSelect" class="btn btn-info gameControls pull-right">Selection Confirm</a>
     </div>
-</div>
+</div>*@
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-info">
@@ -20,11 +20,37 @@
     </div>
 </div>
 
-<div class="panel panel-info">
-    <div class="panel-heading">Player Board</div>
-    <div class="panel-body">
-        @Html.Partial("_playerBoard", currentPlayer)
+<div class="tab-content form-group">
+    <div class="row">
+        <div class="col-xs-8 col-md-8">
+            <ul class="nav nav-pills">
+                @foreach (var player in Model.Players)
+                {
+                    <li @if (currentPlayer.Name.Equals(player.Name)) { <text> class="active"</text> }><a data-toggle="pill" href="#board_@player.Name">Player @player.Name</a></li>
+                }
+                
+            </ul>
+        </div>
+        @*<div class="col-xs-4 col-md-4">
+            <a href="#" id="numberPlaced" class="btn btn-info gameControls pull-right">Done</a>
+        </div>*@
     </div>
+    <br />
+    
+    @foreach (var player in Model.Players)
+    {
+        <div class="tab-pane fade @if (currentPlayer.Name.Equals(player.Name)) { <text> in active</text> }" id="board_@player.Name">
+            <div class="panel panel-info">
+                <div class="panel-heading">@player.Name Board</div>
+                <div class="panel-body">
+                    @Html.Partial("_playerBoard", player)
+                </div>
+            </div>
+        </div>
+    }
 </div>
+
+
+
 
 

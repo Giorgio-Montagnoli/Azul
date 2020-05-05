@@ -1,18 +1,17 @@
-﻿@model Azul.Models.Tile[]
+﻿@model Azul.Models.RowToInsert
 
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-1">
-            @if (item != null && !string.IsNullOrWhiteSpace(item.ImgUrl))
-            {
-                <img src="@item.ImgUrl" width="31" />
-            }
-            else
-            {
-                <div style="width:31px;height:31px; border:1px solid black"></div>
-            }
-        </div>
-    }
-</div>
+@for (int x = 0; x <= Model.Position - Model.Inserted; x++)
+{
+    <div class="col-md-1">
+        <div style="width:31px;height:31px; border:1px solid black"></div>
+    </div>
+}
+
+@for (int x = 0; x < Model.Inserted; x++)
+{
+    <div class="col-md-1">
+         <img src="/Content/images/@(Model.TypeInUse.Value).png" width="31" />
+    </div>
+}
+
 
