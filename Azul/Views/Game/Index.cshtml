@@ -50,6 +50,10 @@
                 url: "/Game",
             }).done(function (result) {
                 $("#gameCont").html(result);
+
+                if ($.cookie('gameName') != $("#gameNameTxt").html()) {
+                    $(".rowSelect").hide();
+                }
             });
         }
 

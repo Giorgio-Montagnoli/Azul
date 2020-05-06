@@ -9,7 +9,7 @@
     {
         <div class="col-md-6">
             <div class="panel panel-info">
-                <div class="panel-heading">@player.Name Board @if (player.IsFirstPlayer) { <text><span style="color:red">is First player</span></text> }</div>
+                <div class="panel-heading">@if (player.IsFirstPlayer){ <text><img src="/Content/images/Player1.png" width="26" /></text> } <span  @if (player.IsMyTurn) { <text> class="glow"</text>}>@player.Name</span></div>
                 <div class="panel-body">
                     @Html.Partial("_playerBoard", player)
                 </div>
@@ -36,7 +36,9 @@
         {
             <div class="col-md-6">
                 <div class="panel panel-info">
-                    <div class="panel-heading">@player.Name Board</div>
+                    <div class="panel-heading">
+                        @if (player.IsFirstPlayer){ <text><img src="/Content/images/Player1.png" width="26" /></text> } <span @if (player.IsMyTurn) { <text> class="glow" </text> }>@player.Name</span>
+                    </div>
                     <div class="panel-body">
                         @Html.Partial("_playerBoard", player)
                     </div>

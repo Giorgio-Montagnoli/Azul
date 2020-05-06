@@ -23,14 +23,7 @@
                 @foreach (var item in rows)
                 {
                     <div class="col-md-1">
-                        @if (item != null && item.Placed)
-                        {
-                            <img src="@item.ImgUrl" width="31" />
-                        }
-                        else
-                        {
-                            <div style="width:31px;height:31px; border:1px solid black"></div>
-                        }
+                            <img src="@item.ImgUrl" @if (!item.Placed) { <text> style="opacity:0.3" </text> } width="31" />
                     </div>
                  }
             </div>
