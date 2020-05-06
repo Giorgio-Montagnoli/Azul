@@ -139,7 +139,7 @@ namespace Azul.Models.ViewModel
                 if (tiles.Count < 4)
                 {
                     // Metto la riserva nel sacchetto e lo rimescolo
-                    TilesBag = CommonReserve;
+                    TilesBag = CommonReserve.ToList();
 
                     for (var k = 0; k < 3; k++)
                     {
@@ -148,10 +148,20 @@ namespace Azul.Models.ViewModel
 
                     // Svuoto la riserva
                     CommonReserve = new List<Tile>();
+
+                    // Completo le tile da inserire nell'espositore
+                    var tilesToTake = 4 - tiles.Count;
+
+                    tiles.AddRange(TilesBag.Take(tilesToTake));
+
+                    TilesBag.RemoveRange(0, tilesToTake);
+                }
+                else
+                {
+                    TilesBag.RemoveRange(0, 4);
                 }
 
                 Expositors.Add(new Expositor(i + 1) { Tiles = tiles });
-                TilesBag.RemoveRange(0, 4);
             }
 
             // Solo la tile primo giocatore al centro
@@ -186,7 +196,7 @@ namespace Azul.Models.ViewModel
             else
             {
                 // Tutti i giocatori fanno lo score di fine round
-                Players.ForEach(p => p.UpdateBoard());
+                Players.ForEach(p => CommonReserve.AddRange(p.UpdateBoard()));
 
                 // Se almeno un giocatore ha completato una riga
                 if (Players.Any(p => p.HasCompletedARow()))

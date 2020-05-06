@@ -123,7 +123,7 @@ namespace Azul.Models
                 VictoryPoints = Math.Max(0, VictoryPoints - penalty);
 
                 // Rimetto le tessere penalità nel sacchetto
-                returnedTiles.AddRange(FloorRow.Where(t => t.Type.Equals(TileType.Player1)));
+                returnedTiles.AddRange(FloorRow.Where(t => !t.Type.Equals(TileType.Player1)));
                 FloorRow = new List<Tile>();
             }
 
