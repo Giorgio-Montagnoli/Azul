@@ -5,10 +5,12 @@
         @foreach (var row in Model.Rows)
         {
             <div class="row">
-                
+                @if (Model.IsMyTurn)
+                {
                     <div class="col-md-1">
                         <a href="#" data-rowselected="@Model.Name-@row.Position" class="rowSelect btn-default glyphicon glyphicon-hand-right"></a>
                     </div>
+                }
                 
                 @Html.Partial("_playerInsertingRow", row)
             </div>
@@ -74,12 +76,10 @@
                     <div style="width:31px;height:31px; border:1px solid black"></div>
                 </div>
             }
+            <div class="col-md-5">
+                Current Victory Points: @Model.VictoryPoints
+            </div>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <h2>Current Victory Points: @Model.VictoryPoints</h2>
     </div>
 </div>
 

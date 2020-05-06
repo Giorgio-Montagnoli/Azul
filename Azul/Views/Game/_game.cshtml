@@ -4,44 +4,12 @@
     var currentPlayer = Model.Players.First(s => s.Name.Equals(Request.Cookies.Get(Azul.Helpers.Utility.COOKIE_GAME_NAME).Value));
 }
 
-@*<div class="row form-group">
-    <div class="col-xs-12 col-md-12">
-        <a href="#" id="confirmSelect" class="btn btn-info gameControls pull-right">Selection Confirm</a>
-    </div>
-</div>*@
-<div class="row">
-    <div class="col-xs-12">
-        <div class="panel panel-info">
-            <div class="panel-heading">Game</div>
-            <div class="panel-body">
-                @Html.Partial("_gameFactories", Model)
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="tab-content form-group">
-    <div class="row">
-        <div class="col-xs-8 col-md-8">
-            <ul class="nav nav-pills">
-                @foreach (var player in Model.Players)
-                {
-                    <li @if (currentPlayer.Name.Equals(player.Name)) { <text> class="active"</text> }><a data-toggle="pill" href="#board_@player.Name">Player @player.Name</a></li>
-                }
-                
-            </ul>
-        </div>
-        @*<div class="col-xs-4 col-md-4">
-            <a href="#" id="numberPlaced" class="btn btn-info gameControls pull-right">Done</a>
-        </div>*@
-    </div>
-    <br />
-    
-    @foreach (var player in Model.Players)
+<div class="row form-group">
+    @foreach (var player in Model.Players.Take(2))
     {
-        <div class="tab-pane fade @if (currentPlayer.Name.Equals(player.Name)) { <text> in active</text> }" id="board_@player.Name">
+        <div class="col-md-6">
             <div class="panel panel-info">
-                <div class="panel-heading">@player.Name Board</div>
+                <div class="panel-heading">@player.Name Board @if (player.IsFirstPlayer) { <text><span style="color:red">is First player</span></text> }</div>
                 <div class="panel-body">
                     @Html.Partial("_playerBoard", player)
                 </div>
@@ -49,6 +17,80 @@
         </div>
     }
 </div>
+
+<div class="row form-group">
+    <div class="col-xs-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">Center Table</div>
+            <div class="panel-body">
+                @Html.Partial("_gameFactories", Model)
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Players.Count > 2)
+{
+    <div class="row form-group">
+        @foreach (var player in Model.Players.Skip(2))
+        {
+            <div class="col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">@player.Name Board</div>
+                    <div class="panel-body">
+                        @Html.Partial("_playerBoard", player)
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+
+<div class="row form-group">
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                Common Reserve
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    @foreach (var item in Model.CommonReserve.Select(s => new { Type = s.Type, ImgUrl = s.ImgUrl }).Distinct().ToList())
+                    {
+
+                        <div class="col-md-2">
+                            <img src="@item.ImgUrl" width="31" />: @Model.CommonReserve.Count(c => c.Type == item.Type)
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                Tiles Bag
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    @foreach (var item in Model.TilesBag.Select(s => new { Type = s.Type, ImgUrl = s.ImgUrl }).Distinct().ToList())
+                    {
+
+                        <div class="col-md-2">
+                            <img src="@item.ImgUrl" width="31" />: @Model.TilesBag.Count(c => c.Type == item.Type)
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 

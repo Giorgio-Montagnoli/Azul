@@ -39,6 +39,7 @@ namespace Azul
             if (gameVM.Start())
             {
                 Clients.Group(gameId).showMessage($"{ name } started a game at { gameVM.Started.Value }.");
+                Clients.Group(gameId).gameStarted();
                 Clients.Group(gameId).refreshGameForAll(gameVM);
             }
         }
@@ -67,6 +68,7 @@ namespace Azul
             var gameVM = MemoryCache.Default[gameId] as GameVM;
 
             gameVM.TakeFromExpositor(name, expositorNumber, rowNumber, typeSelected);
+            Clients.Group(gameId).showMessage($"{ name } took {typeSelected} tiles from Expositor num {expositorNumber} and put in {rowNumber} row.");
             Clients.Group(gameId).refreshGameForAll(gameVM);
         }
 
@@ -76,6 +78,7 @@ namespace Azul
             var gameVM = MemoryCache.Default[gameId] as GameVM;
 
             gameVM.TakeFromCenterTable(name, rowNumber, typeSelected);
+            Clients.Group(gameId).showMessage($"{ name } took {typeSelected} tiles from center of the table.");
             Clients.Group(gameId).refreshGameForAll(gameVM);
         }
 
