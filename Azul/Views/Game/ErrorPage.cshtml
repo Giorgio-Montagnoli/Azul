@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "ErrorPage";
+}
+
+<br/>
+<div class="row form-group">
+    <div class="col-xs-12 text-center" style="padding-left: 25%;padding-right: 25%;">
+        <h2>Whooops!!</h2>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-xs-12 text-center">
+        <img src="~/Content/images/ErrorPage.PNG" />
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-xs-12 text-center" style="padding-left: 25%;padding-right: 25%;">
+        <div class="alert alert-danger" role="alert"><b>@ViewBag.ErrorMsg</b></div>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-xs-12 text-center" style="padding-left: 25%;padding-right: 25%;">
+        @Html.ActionLink("Back Home", "Index", "Home", new { area = "" }, new { @class = "btn btn-info" })
+    </div>
+</div>
+
+
+

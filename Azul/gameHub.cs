@@ -27,7 +27,7 @@ namespace Azul
             var gameId = Clients.Caller.gameId as string;
             var name = Clients.Caller.name as string;
 
-            Clients.Group(gameId).showMessage($"[ { name } ] says: { msg }");
+            Clients.Group(gameId).showMessage($"<span style='color:#337ab7'><b>[ { name } ]</b> says: </span> { msg }");
         }
 
         public void StartGame()

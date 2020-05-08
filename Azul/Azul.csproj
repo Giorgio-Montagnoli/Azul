@@ -131,6 +131,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\Black.png" />
     <Content Include="Content\images\Blue.png" />
+    <Content Include="Content\images\ErrorPage.PNG" />
     <Content Include="Content\images\factory.png" />
     <Content Include="Content\images\Ice.png" />
     <Content Include="Content\images\Player1.png" />
@@ -202,6 +203,7 @@
     <Content Include="Views\Game\_expositor.cshtml" />
     <Content Include="Views\Game\_floorRow.cshtml" />
     <Content Include="Views\Game\_resumeTileCount.cshtml" />
+    <Content Include="Views\Game\ErrorPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

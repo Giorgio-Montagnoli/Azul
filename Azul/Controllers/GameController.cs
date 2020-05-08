@@ -107,6 +107,24 @@ namespace Azul.Controllers
             return JoinAndWait(gameVM, name);
         }
 
+        public ActionResult GameNotFound()
+        {
+            ViewBag.ErrorMsg = "Game not found. Try to join/create another one.";
+            return View("ErrorPage");
+        }
+
+        public ActionResult GameFull()
+        {
+            ViewBag.ErrorMsg = "Game contains already 4 players. Try to join/create another one.";
+            return View("ErrorPage");
+        }
+
+        public ActionResult UsernameAlreadyUsed()
+        {
+            ViewBag.ErrorMsg = "The username you've chosen is already in use. Try with another one.";
+            return View("ErrorPage");
+        }
+
         public void GameStarted(string gameId)
         {
             var gamesListVM = GetAvailableGames();
