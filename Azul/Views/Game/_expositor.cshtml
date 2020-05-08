@@ -1,0 +1,13 @@
+﻿@model Azul.Models.Expositor
+
+<div class="col-md-3 text-center">
+    @if (Model.Tiles.Count > 0)
+    {
+        foreach (var tile in Model.Tiles)
+        {
+            <img src="@tile.ImgUrl" class="selectable form-group @tile.Type" data-exposnumber="@Model.Number" data-color="@tile.Type" style="cursor:pointer" width="31" />
+        }
+        <div>@Model.Number</div>
+    }
+</div>
+

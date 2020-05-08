@@ -1,0 +1,14 @@
+﻿@model List<Azul.Models.Tile>
+
+ <div class="panel-body">
+     <div class="row">
+         @foreach (var item in Model.Select(s => new { Type = s.Type, ImgUrl = s.ImgUrl }).Distinct().ToList())
+         {
+             <div class="col-md-2">
+                 <img src="@item.ImgUrl" width="31" />: @Model.Count(c => c.Type == item.Type)
+             </div>
+         }
+     </div>
+ </div>
+
+    

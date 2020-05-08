@@ -1,78 +1,40 @@
 ﻿@model Azul.Models.Player
+<div class="col-md-6">
+    <div class="panel @if (Model.IsMyTurn) { <text> panel-success </text>} else {<text> panel-default </text>}">
+        <div class="panel-heading">
+        @if (Model.IsFirstPlayer){ <text><img src="/Content/images/Player1.png" width="26" /></text> } <span @if (Model.IsMyTurn) { <text> class="glow" </text> }>@Model.Name</span><span class="pull-right">VP: @Model.VictoryPoints</span></div>
+        <div class="panel-body">
+            <div class="row form-group">
+                <div class="col-md-6">
+                    @foreach (var row in Model.Rows)
+                    {
+                        <div class="row">
+                            @if (Model.IsMyTurn)
+                                {
+                                    <div class="col-md-1">
+                                        <a href="#" data-rowselected="@Model.Name-@row.Position" class="rowSelect btn-default glyphicon glyphicon-hand-right"></a>
+                                    </div>
+                                }
 
-<div class="row form-group">
-    <div class="col-md-6">
-        @foreach (var row in Model.Rows)
-        {
-            <div class="row">
-                @if (Model.IsMyTurn)
-                {
-                    <div class="col-md-1">
-                        <a href="#" data-rowselected="@Model.Name-@row.Position" class="rowSelect btn-default glyphicon glyphicon-hand-right"></a>
-                    </div>
-                }
-                
-                @Html.Partial("_playerInsertingRow", row)
-            </div>
-        }
-    </div>
-    <div class="col-md-6">
-        @foreach (var rows in Model.Wall)
-        {
-            <div class="row">
-                @foreach (var item in rows)
-                {
-                    <div class="col-md-1">
-                            <img src="@item.ImgUrl" @if (!item.Placed) { <text> style="opacity:0.3" </text> } width="31" />
-                    </div>
-                 }
-            </div>
-        }
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-1 text-center">
-                -1
-            </div>
-            <div class="col-md-1 text-center">
-                -1
-            </div>
-            <div class="col-md-1 text-center">
-                -2
-            </div>
-            <div class="col-md-1 text-center">
-                -2
-            </div>
-            <div class="col-md-1 text-center">
-                -2
-            </div>
-            <div class="col-md-1 text-center">
-                -3
-            </div>
-            <div class="col-md-1 text-center">
-                -3
-            </div>
-        </div>
-        <div class="row">
-            @foreach (var item in Model.FloorRow)
-            {
-                <div class="col-md-1">
-                    <img src="@item.ImgUrl" width="31" />
+                            @Html.Partial("_playerInsertingRow", row)
+                        </div>
+                    }
                 </div>
-            }
-
-            @for (int x = 0; x < 7 - Model.FloorRow.Count; x++)
-            {
-                <div class="col-md-1">
-                    <div style="width:31px;height:31px; border:1px solid black"></div>
+                <div class="col-md-6">
+                    @foreach (var rows in Model.Wall)
+                    {
+                        <div class="row">
+                            @foreach (var item in rows)
+                            {
+                                <div class="col-md-1">
+                                    <img src="@item.ImgUrl" @if (!item.Placed) { <text> style="opacity:0.3" </text>  } width="31" />
+                                </div>
+                            }
+                        </div>
+                    }
                 </div>
-            }
-            <div class="col-md-5">
-                Current Victory Points: @Model.VictoryPoints
             </div>
+            @Html.Partial("_floorRow", Model.FloorRow)
         </div>
     </div>
 </div>
-

@@ -68,7 +68,14 @@ namespace Azul
             var gameVM = MemoryCache.Default[gameId] as GameVM;
 
             gameVM.TakeFromExpositor(name, expositorNumber, rowNumber, typeSelected);
-            Clients.Group(gameId).showMessage($"{ name } took {typeSelected} tiles from Expositor num {expositorNumber} and put in {rowNumber} row.");
+            Clients.Group(gameId).showMessage($"{ name } -> <img src=\"/Content/images/{typeSelected}.png\" width=\"15\" /> from {expositorNumber} -> {rowNumber} row.");
+
+            if (gameVM.Ended.HasValue)
+            {
+                var winner = gameVM.Players.OrderByDescending(o => o.VictoryPoints).First();
+                Clients.Group(gameId).showMessage($"<span style='color:red'>GAME ENDED! The winnwe is { winner.Name }</span>");
+            }
+
             Clients.Group(gameId).refreshGameForAll(gameVM);
         }
 
@@ -78,7 +85,14 @@ namespace Azul
             var gameVM = MemoryCache.Default[gameId] as GameVM;
 
             gameVM.TakeFromCenterTable(name, rowNumber, typeSelected);
-            Clients.Group(gameId).showMessage($"{ name } took {typeSelected} tiles from center of the table.");
+            Clients.Group(gameId).showMessage($"{ name } -> <img src=\"/Content/images/{typeSelected}.png\" width=\"15\" /> from Center -> {rowNumber} row.");
+
+            if (gameVM.Ended.HasValue)
+            {
+                var winner = gameVM.Players.OrderByDescending(o => o.VictoryPoints).First();
+                Clients.Group(gameId).showMessage($"<span style='color:red'>GAME ENDED! The winnwe is { winner.Name }</span>");
+            }
+
             Clients.Group(gameId).refreshGameForAll(gameVM);
         }
 

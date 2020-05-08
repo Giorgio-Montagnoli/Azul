@@ -135,6 +135,7 @@
     <Content Include="Content\images\Ice.png" />
     <Content Include="Content\images\Player1.png" />
     <Content Include="Content\images\Red.png" />
+    <Content Include="Content\images\scoring.PNG" />
     <Content Include="Content\images\Yellow.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\tiles.css" />
@@ -198,6 +199,9 @@
     <Content Include="Views\Game\_gameFactories.cshtml" />
     <Content Include="Views\Game\_playerInsertingRow.cshtml" />
     <Content Include="Views\Game\_playerBoard.cshtml" />
+    <Content Include="Views\Game\_expositor.cshtml" />
+    <Content Include="Views\Game\_floorRow.cshtml" />
+    <Content Include="Views\Game\_resumeTileCount.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

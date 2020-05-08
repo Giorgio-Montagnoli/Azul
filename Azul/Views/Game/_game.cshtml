@@ -1,91 +1,47 @@
 ﻿@model Azul.Models.ViewModel.GameVM
 
-@{
-    var currentPlayer = Model.Players.First(s => s.Name.Equals(Request.Cookies.Get(Azul.Helpers.Utility.COOKIE_GAME_NAME).Value));
-}
+<div class="row form-group">
+    <div class="col-md-12 text-center">
+        Turn N° @Model.RoundNo
+    </div>
+</div>
 
 <div class="row form-group">
-    @foreach (var player in Model.Players.Take(2))
+    @foreach (var player in Model.Players.OrderBy(o => o.Name).Take(2))
     {
-        <div class="col-md-6">
-            <div class="panel panel-info">
-                <div class="panel-heading">@if (player.IsFirstPlayer){ <text><img src="/Content/images/Player1.png" width="26" /></text> } <span  @if (player.IsMyTurn) { <text> class="glow"</text>}>@player.Name</span></div>
-                <div class="panel-body">
-                    @Html.Partial("_playerBoard", player)
-                </div>
-            </div>
-        </div>
+        @Html.Partial("_playerBoard", player)
     }
 </div>
 
 <div class="row form-group">
-    <div class="col-xs-12">
-        <div class="panel panel-info">
-            <div class="panel-heading">Center Table</div>
-            <div class="panel-body">
-                @Html.Partial("_gameFactories", Model)
-            </div>
-        </div>
-    </div>
+    @Html.Partial("_gameFactories", Model)        
 </div>
 
 @if (Model.Players.Count > 2)
 {
     <div class="row form-group">
-        @foreach (var player in Model.Players.Skip(2))
+        @foreach (var player in Model.Players.OrderBy(o => o.Name).Skip(2))
         {
-            <div class="col-md-6">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        @if (player.IsFirstPlayer){ <text><img src="/Content/images/Player1.png" width="26" /></text> } <span @if (player.IsMyTurn) { <text> class="glow" </text> }>@player.Name</span>
-                    </div>
-                    <div class="panel-body">
-                        @Html.Partial("_playerBoard", player)
-                    </div>
-                </div>
-            </div>
+            @Html.Partial("_playerBoard", player)
         }
     </div>
 }
 
-
 <div class="row form-group">
     <div class="col-md-6">
-        <div class="panel panel-info">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 Common Reserve
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    @foreach (var item in Model.CommonReserve.Select(s => new { Type = s.Type, ImgUrl = s.ImgUrl }).Distinct().ToList())
-                    {
-
-                        <div class="col-md-2">
-                            <img src="@item.ImgUrl" width="31" />: @Model.CommonReserve.Count(c => c.Type == item.Type)
-                        </div>
-
-                    }
-                </div>
-            </div>
+            @Html.Partial("_resumeTileCount", Model.CommonReserve)
         </div>
     </div>
     <div class="col-md-6">
-        <div class="panel panel-info">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 Tiles Bag
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    @foreach (var item in Model.TilesBag.Select(s => new { Type = s.Type, ImgUrl = s.ImgUrl }).Distinct().ToList())
-                    {
-
-                        <div class="col-md-2">
-                            <img src="@item.ImgUrl" width="31" />: @Model.TilesBag.Count(c => c.Type == item.Type)
-                        </div>
-
-                    }
-                </div>
-            </div>
+            @Html.Partial("_resumeTileCount", Model.TilesBag)
         </div>
     </div>
 </div>

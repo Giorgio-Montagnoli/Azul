@@ -51,7 +51,7 @@
             }).done(function (result) {
                 $("#gameCont").html(result);
 
-                if ($.cookie('gameName') != $("#gameNameTxt").html()) {
+                if ($.cookie('gameName') != $(".glow").html()) {
                     $(".rowSelect").hide();
                 }
             });
@@ -102,18 +102,23 @@
                 });
 
                 $(document).on("click", '.rowSelect', function (event) {
-                    var rowSelected = $(this).data('rowselected');
-                    var rowInfo = rowSelected.split("-");
-                    var exposNumber = $('.selectedItems').first().data('exposnumber');
-                    var color = $('.selectedItems').first().data('color');
+                    if ($('.selectedItems').length > 0) {
+                        var rowSelected = $(this).data('rowselected');
+                        var rowInfo = rowSelected.split("-");
+                        var exposNumber = $('.selectedItems').first().data('exposnumber');
+                        var color = $('.selectedItems').first().data('color');
 
-                    $(".selectable").removeClass('selectedItems');
+                        $(".selectable").removeClass('selectedItems');
 
-                    if (exposNumber == -1) {
-                        chat.server.takeFromCenterTable(gameId, rowInfo[1], color);
+                        if (exposNumber == -1) {
+                            chat.server.takeFromCenterTable(gameId, rowInfo[1], color);
+                        }
+                        else {
+                            chat.server.takeFromExpositor(gameId, exposNumber, rowInfo[1], color);
+                        }
                     }
                     else {
-                        chat.server.takeFromExpositor(gameId, exposNumber, rowInfo[1], color);
+                        alert("Please select tiles from an expositor or center table.");
                     }
                 });
             });

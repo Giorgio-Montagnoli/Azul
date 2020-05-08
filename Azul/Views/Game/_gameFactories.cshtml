@@ -1,36 +1,34 @@
 ﻿@model Azul.Models.ViewModel.GameVM
 
-<div class="row form-group">
-    @{
-        var firstHalf = (int)Math.Ceiling((double)Model.Expositors.Count / 2);
-    }
-        @foreach (var factory in Model.Expositors.Take(firstHalf))
-        {
-            <div class="col-md-3 text-center">
-                @foreach (var tile in factory.Tiles)
-                {
-                    <img src="@tile.ImgUrl" class="selectable form-group @tile.Type" data-exposnumber="@factory.Number" data-color="@tile.Type" style="cursor:pointer" width="31" />
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">Center Table</div>
+        <div class="panel-body">
+            <div class="row form-group">
+                @{
+                    var firstHalf = (int)Math.Ceiling((double)Model.Expositors.Count / 2);
+
+                    foreach (var factory in Model.Expositors.Take(firstHalf))
+                    {
+                        @Html.Partial("_expositor", factory)
+                    }
                 }
             </div>
-        }
-    
-</div>
-<div class="row form-group">
-    <div class="col-md-12 text-center">
-        @foreach (var item in Model.CenterTable)
-        {
-            <img src="@item.ImgUrl" class="selectable form-group @item.Type" data-exposnumber="-1" data-color="@item.Type" style="cursor:pointer" width="31" />
-        }
-    </div>
-</div>
-<div class="row form-group">
-    @foreach (var factory in Model.Expositors.Skip(firstHalf))
-    {
-        <div class="col-md-3 text-center">
-                @foreach (var tile in factory.Tiles)
+            <div class="row form-group">
+                <div class="col-md-12 text-center">
+                    @foreach (var item in Model.CenterTable)
+                    {
+                        <img src="@item.ImgUrl" class="selectable form-group @item.Type" data-exposnumber="-1" data-color="@item.Type" style="cursor:pointer" width="31" />
+                    }
+                    <div>Center</div>
+                </div>
+            </div>
+            <div class="row form-group">
+                @foreach (var factory in Model.Expositors.Skip(firstHalf))
                 {
-                    <img src="@tile.ImgUrl" class="selectable form-group @tile.Type" data-exposnumber="@factory.Number" data-color="@tile.Type" style="cursor:pointer" width="31" />
+                    @Html.Partial("_expositor", factory)
                 }
+            </div>
         </div>
-    }
+    </div>
 </div>

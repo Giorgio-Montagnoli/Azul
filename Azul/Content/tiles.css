@@ -8,7 +8,7 @@
 
 .glow {
   font-size: 18px;
-  color: #fff;
+  color: #228B22;
   text-align: center;
   -webkit-animation: glow 1s ease-in-out infinite alternate;
   -moz-animation: glow 1s ease-in-out infinite alternate;
