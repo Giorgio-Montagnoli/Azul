@@ -113,6 +113,12 @@ namespace Azul.Controllers
             return View("ErrorPage");
         }
 
+        public ActionResult GameStarted()
+        {
+            ViewBag.ErrorMsg = "Game already started. Try to join/create another one.";
+            return View("ErrorPage");
+        }
+
         public ActionResult GameFull()
         {
             ViewBag.ErrorMsg = "Game contains already 4 players. Try to join/create another one.";
