@@ -121,6 +121,33 @@
                         alert("Please select tiles from an expositor or center table.");
                     }
                 });
+
+                $('#leaveRoom').click(function () {
+                    chat.server.leave(chat.state.gameId);
+                    window.location.replace('/');
+                });
+
+                $("#sendMsg").click(function () {
+                    var $msgToSend = $("#msgToSend");
+
+                    chat.server.sendChat($msgToSend.val());
+                    $msgToSend.val('');
+                });
+
+                // per intercettare la pressione del tasto [enter]
+                $('#msgToSend').keyup(function (e) {
+                    if (e.keyCode == 13) {
+                        var $msgToSend = $("#msgToSend");
+
+                        chat.server.sendChat($msgToSend.val());
+                        $msgToSend.val('');
+                    }
+                });
+
+                $("#accordToggleIcon").click(function () {
+                    $(this).toggleClass("glyphicon-chevron-down");
+                    $(this).toggleClass("glyphicon-chevron-up");
+                });
             });
 
             $(document).on("click", '.selectable', function (event) {
@@ -131,13 +158,6 @@
                 var parent = $(this).parent();
                 parent.children("." + colorSelected).addClass('selectedItems');
             });
-
-            $("#accordToggleIcon").click(function () {
-                $(this).toggleClass("glyphicon-chevron-down");
-                $(this).toggleClass("glyphicon-chevron-up");
-            });
-
-            //callGameRefresh();
         });
     </script>
 }
