@@ -52,7 +52,7 @@
                 $("#gameCont").html(result);
 
                 if ($.cookie('gameName') != $(".glow").html()) {
-                    $(".rowSelect").hide();
+                    $(".rowSelect").parent().remove();
                 }
             });
         }
@@ -130,6 +130,11 @@
 
                 var parent = $(this).parent();
                 parent.children("." + colorSelected).addClass('selectedItems');
+            });
+
+            $("#accordToggleIcon").click(function () {
+                $(this).toggleClass("glyphicon-chevron-down");
+                $(this).toggleClass("glyphicon-chevron-up");
             });
 
             //callGameRefresh();

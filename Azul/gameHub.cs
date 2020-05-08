@@ -73,7 +73,7 @@ namespace Azul
             if (gameVM.Ended.HasValue)
             {
                 var winner = gameVM.Players.OrderByDescending(o => o.VictoryPoints).First();
-                Clients.Group(gameId).showMessage($"<span style='color:red'>GAME ENDED! The winnwe is { winner.Name }</span>");
+                Clients.Group(gameId).showMessage($"<span style='color:red'>GAME ENDED! The winner is { winner.Name }</span>");
             }
 
             Clients.Group(gameId).refreshGameForAll(gameVM);
@@ -90,7 +90,7 @@ namespace Azul
             if (gameVM.Ended.HasValue)
             {
                 var winner = gameVM.Players.OrderByDescending(o => o.VictoryPoints).First();
-                Clients.Group(gameId).showMessage($"<span style='color:red'>GAME ENDED! The winnwe is { winner.Name }</span>");
+                Clients.Group(gameId).showMessage($"<span style='color:red'>GAME ENDED! The winner is { winner.Name }</span>");
             }
 
             Clients.Group(gameId).refreshGameForAll(gameVM);

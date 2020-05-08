@@ -2,14 +2,14 @@
 
 @for (int x = 0; x <= Model.Position - Model.Inserted; x++)
 {
-    <div class="col-md-1">
+    <div class="col-xs-1 col-md-1">
         <div style="width:31px;height:31px; border:1px solid black"></div>
     </div>
 }
 
 @for (int x = 0; x < Model.Inserted; x++)
 {
-    <div class="col-md-1">
+    <div class="col-xs-1 col-md-1">
          <img src="/Content/images/@(Model.TypeInUse.Value).png" width="31" />
     </div>
 }
