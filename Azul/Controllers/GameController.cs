@@ -84,7 +84,7 @@ namespace Azul.Controllers
             }
             else if (gameVM.Started.HasValue)
             {
-                return RedirectToAction("GameStarted");
+                return RedirectToAction("GameAlreadyStarted");
             }
             else if (gameVM.Players.Count > 3)
             {
@@ -113,7 +113,7 @@ namespace Azul.Controllers
             return View("ErrorPage");
         }
 
-        public ActionResult GameStarted()
+        public ActionResult GameAlreadyStarted()
         {
             ViewBag.ErrorMsg = "Game already started. Try to join/create another one.";
             return View("ErrorPage");
